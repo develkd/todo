@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Base application theme. -->
+         <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#25b99a</item>
+        <item name="colorPrimaryDark">#51c7ae</item>
+        <item name="colorAccent">#FFCFF2EB</item>
+    </style>
+
+    <style name= "TodoStyleEditText" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/textview_rounded_edges</item><!-- #5f4427 -->
+        <item name="android:textStyle">normal</item>
+        <!--
+        <item name="android:textColor">#25b99a</item>
+        <item name ="android:textColorHighlight">#51c7ae</item>
+        -->
+    </style>
+
+    <style name= "ListStyleEditText" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/listview_rounded_edges</item><!-- #5f4427 -->
+        <item name="android:textStyle">normal</item>
+        <!--
+        <item name="android:textColor">#25b99a</item>
+        <item name ="android:textColorHighlight">#51c7ae</item>
+        -->
+    </style>
+
+    <style name="oval_text"></style>
+</resources>

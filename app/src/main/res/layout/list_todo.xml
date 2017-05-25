@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center_vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/task_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="90dp"
+        android:text="Hi"
+        android:textSize="18sp"
+        android:theme="@style/ListStyleEditText" />
+
+    <ImageButton
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="8dp"
+        android:layout_toStartOf="@+id/delete"
+        android:background="@android:color/transparent"
+        android:onClick="editTask"
+        app:srcCompat="@drawable/task_edit_trans_32_32" />
+
+    <ImageButton
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/edit"
+        android:layout_marginRight="8dp"
+        android:background="@android:color/transparent"
+        android:onClick="deleteTask"
+        app:srcCompat="@drawable/task_delete_trans_32_32" />
+
+
+</RelativeLayout>

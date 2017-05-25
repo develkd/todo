@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="kd.master.de.todolist.MainActivity"
+    tools:layout_editor_absoluteY="25dp"
+    tools:layout_editor_absoluteX="0dp"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="20dp">
+
+        <EditText
+            android:id="@+id/editText"
+            style="@style/ListStyleEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:hint="Activity"
+            android:paddingLeft="5dp"
+            android:paddingRight="50dp"
+            android:textColorLink="?attr/editTextColor"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:onClick="addTask"
+            android:paddingRight="8dp"
+            android:paddingTop="5dp"
+            app:srcCompat="@drawable/task_add_trans_32_32" />
+
+        <ListView
+            android:id="@+id/list_todo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/editText"
+            android:layout_marginTop="8dp"
+            android:elevation="0dp"
+            tools:layout_editor_absoluteX="17dp"
+            tools:layout_editor_absoluteY="111dp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
