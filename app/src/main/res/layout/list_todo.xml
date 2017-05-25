@@ -9,35 +9,40 @@
         android:id="@+id/task_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
         android:paddingLeft="5dp"
         android:paddingRight="90dp"
         android:text="Hi"
         android:textSize="18sp"
-        android:theme="@style/ListStyleEditText" />
+        android:theme="@style/ListStyleEditText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <ImageButton
         android:id="@+id/edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/task_title"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="14dp"
-        android:layout_marginTop="8dp"
         android:layout_toStartOf="@+id/delete"
         android:background="@android:color/transparent"
         android:onClick="editTask"
-        app:srcCompat="@drawable/task_edit_trans_32_32" />
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        app:srcCompat="@drawable/edit_mode" />
 
     <ImageButton
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/edit"
-        android:layout_marginRight="8dp"
         android:background="@android:color/transparent"
         android:onClick="deleteTask"
-        app:srcCompat="@drawable/task_delete_trans_32_32" />
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        app:srcCompat="@drawable/remove_circle"
+        android:layout_alignBottom="@+id/task_title"
+        android:layout_alignParentTop="true" />
+
 
 
 </RelativeLayout>
