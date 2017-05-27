@@ -7,13 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,7 +39,14 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         mHelper = new TaskHelper(this);
         mTaskListView = (ListView)findViewById(R.id.list_todo);
-        editText = (EditText)findViewById(R.id.editText);
+
+        mTaskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                editSelectedDialog((TextView)findViewById(R.id.list_item));
+            }
+        });
+      //  editText = (EditText)findViewById(R.id.editText);
         updateUI();
     }
 
@@ -47,6 +55,91 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_add_task:
+                addNewTaskDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+
+    public void addNewTaskDialog(){
+
+        final EditText taskEditText = new EditText(this);
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Eintrag").
+                setMessage("Hinzufügen:").
+                setView(taskEditText).
+                setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String task = String.valueOf(taskEditText.getText());
+                        SQLiteDatabase db = mHelper.getWritableDatabase();
+                        ContentValues values = new ContentValues();
+                        values.put(Task.TaskEntry.COL_TASK_TITLE, task);
+                        db.insertWithOnConflict(Task.TaskEntry.TABLE, null,values,SQLiteDatabase.CONFLICT_REPLACE);
+                        db.close();
+                        updateUI();
+                    }
+                })
+
+                .setNegativeButton("Abbrechen",null).create();
+        dialog.show();
+
+    }
+
+
+    public void editSelectedDialog(View view){
+        final EditText taskEditText = new EditText(this);
+        final   String updateable = String.valueOf(((AppCompatTextView) view).getText());
+
+        taskEditText.setText(updateable);
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Eintrag").
+                setMessage("Bearbeiten:").
+                setView(taskEditText).
+                setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String task = String.valueOf(taskEditText.getText());
+                        SQLiteDatabase db = mHelper.getWritableDatabase();
+                        ContentValues values = new ContentValues();
+                        values.put(Task.TaskEntry.COL_TASK_TITLE, task);
+                        db.updateWithOnConflict(Task.TaskEntry.TABLE, values,Task.TaskEntry.COL_TASK_TITLE+ " = ?", new String[]{updateable},SQLiteDatabase.CONFLICT_REPLACE);
+                        db.close();
+                        updateUI();
+                    }
+                })
+
+                .setNegativeButton("Abbrechen",null).create();
+        dialog.show();
+
+    }
+
+
+
+    public void deleteTask(View view){
+        View parent = (View)view.getParent();
+        TextView taskView = (TextView)parent.findViewById(R.id.list_item);
+        String task = String.valueOf(taskView.getText());
+        delete(task);
+    }
+
+
+
+    public void editTask(View view){
+        View parent = (View)view.getParent();
+        TextView taskView = (TextView)parent.findViewById(R.id.list_item);
+
+        String task = String.valueOf(taskView.getText());
+        editText.setText(task);
+        delete(task);
+    }
+
 
     public void addTask(View view){
         String task = String.valueOf(editText.getText());
@@ -59,55 +152,6 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
 
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_add_task:
-                final EditText taskEditText = new EditText(this);
-                AlertDialog dialog = new AlertDialog.Builder(this).setTitle("New Task").
-                        setMessage("Add a new task:").
-                        setView(taskEditText).
-                        setPositiveButton("Add", new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String task = String.valueOf(taskEditText.getText());
-                                SQLiteDatabase db = mHelper.getWritableDatabase();
-                                ContentValues values = new ContentValues();
-                                values.put(Task.TaskEntry.COL_TASK_TITLE, task);
-                                db.insertWithOnConflict(Task.TaskEntry.TABLE, null,values,SQLiteDatabase.CONFLICT_REPLACE);
-                                db.close();
-                                updateUI();
-                            }
-                        })
-
-                        .setNegativeButton("cancel",null).create();
-                dialog.show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-
-    public void deleteTask(View view){
-        View parent = (View)view.getParent();
-        TextView taskView = (TextView)parent.findViewById(R.id.task_title);
-        String task = String.valueOf(taskView.getText());
-        delete(task);
-    }
-
-
-
-    public void editTask(View view){
-        View parent = (View)view.getParent();
-        TextView taskView = (TextView)parent.findViewById(R.id.task_title);
-
-        String task = String.valueOf(taskView.getText());
-        editText.setText(task);
-        delete(task);
-     }
-
     private void delete(String task){
         SQLiteDatabase db = mHelper.getWritableDatabase();
         db.delete(Task.TaskEntry.TABLE, Task.TaskEntry.COL_TASK_TITLE+ " = ?", new String[]{task});
@@ -129,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(null == mAdatper){
-            mAdatper = new ArrayAdapter<>(this, R.layout.list_todo, R.id.task_title, taskList);
+            mAdatper = new ArrayAdapter<>(this, R.layout.list_todo, R.id.list_item, taskList);
             mTaskListView.setAdapter(mAdatper);
         }else{
             mAdatper.clear();
