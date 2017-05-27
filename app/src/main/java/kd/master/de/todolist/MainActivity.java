@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,7 +50,19 @@ public class MainActivity extends AppCompatActivity {
                 //  editSelectedDialog((TextView)findViewById(R.id.list_item));
             }
         });
-      //  editText = (EditText)findViewById(R.id.editText);
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.item_edit);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+               //         .setAction("Action", null).show();
+                addNewTaskDialog();
+            }
+        });
+
+        //  editText = (EditText)findViewById(R.id.editText);
         updateUI();
     }
 
@@ -88,9 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         db.close();
                         updateUI();
                     }
-                })
-
-                .setNegativeButton("Abbrechen",null).create();
+                }).setNegativeButton("Abbrechen",null).create();
         dialog.show();
 
     }
@@ -116,9 +128,7 @@ public class MainActivity extends AppCompatActivity {
                         db.close();
                         updateUI();
                     }
-                })
-
-                .setNegativeButton("Abbrechen",null).create();
+                }).setNegativeButton("Abbrechen",null).create();
         dialog.show();
 
     }
