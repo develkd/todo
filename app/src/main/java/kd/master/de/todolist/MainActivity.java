@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         mTaskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                editSelectedDialog((TextView)findViewById(R.id.list_item));
+                editSelectedDialog((ViewGroup)view);
+                //  editSelectedDialog((TextView)findViewById(R.id.list_item));
             }
         });
       //  editText = (EditText)findViewById(R.id.editText);
@@ -94,9 +96,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void editSelectedDialog(View view){
+    public void editSelectedDialog(ViewGroup layout ){
+
         final EditText taskEditText = new EditText(this);
-        final   String updateable = String.valueOf(((AppCompatTextView) view).getText());
+        final   String updateable = String.valueOf(((TextView)layout.findViewById(R.id.list_item)).getText());
 
         taskEditText.setText(updateable);
         AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Eintrag").
