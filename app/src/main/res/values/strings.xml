@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Task-Me-App</string>
+    <string name="activity_name_tasks_availabel">Eingestelle Tasks</string>
 </resources>
