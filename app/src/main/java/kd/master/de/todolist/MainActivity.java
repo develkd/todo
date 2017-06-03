@@ -52,18 +52,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.item_edit);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.item_context_menu);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-               //         .setAction("Action", null).show();
-                addNewTaskDialog();
+                showContextMenu();
+                  addNewTaskDialog();
             }
         });
 
         //  editText = (EditText)findViewById(R.id.editText);
         updateUI();
+    }
+
+    private void showContextMenu() {
+
     }
 
     @Override
